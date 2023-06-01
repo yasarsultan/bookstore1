@@ -1,6 +1,7 @@
 import os
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
+# from tabulate import tabulate
 
 app = Flask(__name__)
 
@@ -37,6 +38,12 @@ def get_all():
     try:
         books = Book.query.all()
         return jsonify([e.serialize() for e in books])
+        # columns = [["Name", "Author", "Publised"]]
+        # data = [i.serialize() for i in books]
+        # for i in data:
+        #     columns.append(i)
+        # return (columns)
+
     except Exception as e:
         return(str(e))
     

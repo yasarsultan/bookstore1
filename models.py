@@ -22,3 +22,4 @@ class Book(db.Model):
             'author': self.author,
             'published': self.published
         }
+        # return [self.id, self.name, self.author, self.published]
