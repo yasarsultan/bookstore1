@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -47,6 +47,26 @@ def get_by_id(id_):
         return jsonify(book.serialize())
     except Exception as e:
         return(str(e))
+    
+@app.route("/add/form", methods=['GET', 'POST'])
+def add_book_form():
+    if request.method == 'POST':
+        name = request.form.get('name')
+        author = request.form.get('author')
+        published = request.form.get('published')
+        try:
+            book = Book(
+                name = name,
+                author = author,
+                published = published
+            )
+            db.session.add(book)
+            db.session.commit()
+            return "Book added, book id={}".format(book.id)
+        except Exception as e:
+            return(str(e))
+    return render_template("postdata.html")
+
 
 # @app.route("/name/<name>")
 # def get_book_name(name):
